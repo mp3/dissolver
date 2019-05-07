@@ -30,6 +30,7 @@ export default () => {
   const compress = (file: File | Blob) => {
     const q = 1 - count / compressRound
     new Compressor(file, {
+      convertSize: 0,
       quality: q,
       maxWidth: 1000,
       maxHeight: 1000,
