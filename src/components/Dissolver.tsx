@@ -25,19 +25,19 @@ export default () => {
     if (count < compressRound) {
       setCount(count + 1)
     } else {
-      download()
+      // download()
     }
 
     setCount(0)
   }
 
-  const download = () => {
-    const url = window.URL.createObjectURL(imageBlob)
-    const a = document.createElement('a')
-    a.download = url
-    a.href = url
-    a.dispatchEvent(new MouseEvent('click'))
-  }
+  // const download = () => {
+  //   const url = window.URL.createObjectURL(imageBlob)
+  //   const a = document.createElement('a')
+  //   a.download = url
+  //   a.href = url
+  //   a.dispatchEvent(new MouseEvent('click'))
+  // }
 
   const compress = (file: File | Blob) => {
     const q = 1 - count / compressRound
