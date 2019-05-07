@@ -4,6 +4,14 @@ import styled from 'styled-components'
 
 const compressRound = 250
 
+const get1Vh = () => window.innerHeight * 0.01
+const setVhToProperty = () => {
+  document.documentElement.style.setProperty('--vh', `${get1Vh()}px`)
+}
+
+setVhToProperty()
+window.addEventListener('resize', () => setVhToProperty())
+
 export default () => {
   const [imageBlob, setImageBlob] = React.useState(new Blob())
   const [imageURL, setImageURL] = React.useState('')
@@ -127,7 +135,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: #000;
   font-family: sans-serif;
 `
@@ -179,7 +187,7 @@ const DraggableArea = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: transparent;
 
   &[data-dragover='true'] {
