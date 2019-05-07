@@ -9,6 +9,8 @@ export default () => {
   const [imageURL, setImageURL] = React.useState('')
   const [count, setCount] = React.useState(0)
   const [isDragover, setDragover] = React.useState(false)
+  const [downloadLink, setDownloadLink] = React.useState('')
+
   const inputElement = React.useRef<HTMLInputElement>(null)
 
   const fileReader = new FileReader()
@@ -26,19 +28,12 @@ export default () => {
     if (count < compressRound) {
       setCount(count + 1)
     } else {
-      // download()
+      const url = window.URL.createObjectURL(imageBlob)
+      setDownloadLink(url)
     }
 
     setCount(0)
   }
-
-  // const download = () => {
-  //   const url = window.URL.createObjectURL(imageBlob)
-  //   const a = document.createElement('a')
-  //   a.download = url
-  //   a.href = url
-  //   a.dispatchEvent(new MouseEvent('click'))
-  // }
 
   const compress = (file: File | Blob) => {
     const q = 1 - count / compressRound
@@ -59,6 +54,7 @@ export default () => {
 
   const checkDraggedFile = (event: React.DragEvent) => {
     event.preventDefault()
+    setDownloadLink('')
 
     const files = event.dataTransfer.files
     Array.from(files).forEach(file => {
@@ -78,6 +74,7 @@ export default () => {
 
   const checkInputFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
+    setDownloadLink('')
 
     const files = event.target.files
     if (files) {
@@ -119,6 +116,9 @@ export default () => {
         onDragLeave={dragleave}
         data-dragover={isDragover}
       />
+      {downloadLink ? (
+        <DownloadLink href={downloadLink}>{'Download'}</DownloadLink>
+      ) : null}
     </Container>
   )
 }
@@ -129,6 +129,25 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   background-color: #000;
+  font-family: sans-serif;
+`
+
+const DownloadLink = styled.a`
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 4px rgba(128, 128, 128, 0.8);
+  width: 140px;
+  height: 32px;
+  padding: 8px;
+  font-size: 28px;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgb(224, 224, 224);
+  color: #000;
 `
 
 const Input = styled.input`
@@ -152,7 +171,6 @@ const Message = styled.div`
   text-align: center;
   font-size: 36px;
   font-weight: bold;
-  font-family: sans-serif;
   color: #fff;
 `
 
