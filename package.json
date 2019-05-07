@@ -1,5 +1,5 @@
 {
-  "name": "react-boilerplate",
+  "name": "dissolver",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --mode development --progress",
