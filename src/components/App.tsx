@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-const Top = React.lazy(() => import('components/pages/Top'))
+const Dissolver = React.lazy(() => import('components/Dissolver'))
 
 export default () => (
   <React.Suspense fallback={<div>Loading...</div>}>
-    <Top />
+    <Dissolver />
   </React.Suspense>
 )
