@@ -9,6 +9,7 @@ export default () => {
   const [imageURL, setImageURL] = React.useState('')
   const [count, setCount] = React.useState(0)
   const [isDragover, setDragover] = React.useState(false)
+  const inputElement = React.useRef<HTMLInputElement>(null)
 
   const fileReader = new FileReader()
 
@@ -75,11 +76,38 @@ export default () => {
     setDragover(false)
   }
 
+  const checkInputFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
+
+    const files = event.target.files
+    if (files) {
+      Array.from(files).forEach(file => {
+        if (file.type.includes('image/')) {
+          compress(file)
+        }
+      })
+    }
+  }
+
+  const openFileSelector = () => {
+    const current = inputElement.current
+    if (current) {
+      current.click()
+    }
+  }
+
   return (
     <Container>
-      {imageURL ? null : <Message>{'Drop image file here'}</Message>}
+      {imageURL ? null : <Message>{'Drop or Select image file here'}</Message>}
+      <Input
+        ref={inputElement}
+        type="file"
+        accept="image/*"
+        onChange={checkInputFile}
+      />
       <Image src={imageURL || ''} />
       <DraggableArea
+        onClick={openFileSelector}
         onDragOver={event => {
           checkDraggedFile(event)
           dragover()
@@ -101,6 +129,10 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   background-color: #000;
+`
+
+const Input = styled.input`
+  display: none;
 `
 
 const Image = styled.img`
