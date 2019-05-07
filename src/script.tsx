@@ -1,15 +1,9 @@
 import App from 'components/App'
-import Router from 'components/organisms/Router'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { createGlobalStyle } from 'styled-components'
 
-ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById('app')
-)
+ReactDOM.render(<App />, document.getElementById('app'))
 
 // tslint:disable-next-line
 createGlobalStyle`
