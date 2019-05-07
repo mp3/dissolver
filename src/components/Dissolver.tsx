@@ -21,19 +21,31 @@ export default () => {
   fileReader.onload = (event: any) => {
     const result = event.target.result
     setImageURL(result)
+
     if (count < compressRound) {
       setCount(count + 1)
+    } else {
+      download()
     }
+
     setCount(0)
+  }
+
+  const download = () => {
+    const url = window.URL.createObjectURL(imageBlob)
+    const a = document.createElement('a')
+    a.download = url
+    a.href = url
+    a.dispatchEvent(new MouseEvent('click'))
   }
 
   const compress = (file: File | Blob) => {
     const q = 1 - count / compressRound
     new Compressor(file, {
       convertSize: 0,
-      quality: q,
-      maxWidth: 1000,
       maxHeight: 1000,
+      maxWidth: 1000,
+      quality: q,
       success(result) {
         setImageBlob(result)
         fileReader.readAsDataURL(result)
