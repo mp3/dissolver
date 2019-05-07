@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "axios": "0.18.0",
+    "compressorjs": "^1.0.5",
     "connected-react-router": "6.3.2",
     "history": "4.9.0",
     "react": "16.8.4",
