@@ -125,9 +125,7 @@ export default () => {
         data-dragover={isDragover}
       />
       {downloadLink ? (
-        <DownloadLink href={downloadLink} download={downloadLink}>
-          {'Download'}
-        </DownloadLink>
+        <DownloadLink href={downloadLink}>{'Download'}</DownloadLink>
       ) : null}
     </Container>
   )
