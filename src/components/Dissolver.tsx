@@ -65,7 +65,7 @@ export default () => {
 
   return (
     <Container>
-      {imageURL ? null : <Message>{'Drop image file'}</Message>}
+      {imageURL ? null : <Message>{'Drop image file here'}</Message>}
       <Image src={imageURL || ''} />
       <DraggableArea
         onDragOver={event => {
@@ -102,7 +102,7 @@ const Message = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 100%;
   height: 40px;
   margin: auto;
   text-align: center;
