@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export default () => {
   const [image, setImage] = React.useState(null)
+  const [isDragover, setDragover] = React.useState(false)
 
   const fileReader = new FileReader()
   fileReader.onload = (event: any) => {
@@ -21,10 +22,29 @@ export default () => {
     })
   }
 
+  const dragover = () => {
+    setDragover(true)
+  }
+
+  const dragleave = () => {
+    setDragover(false)
+  }
+
   return (
     <Container>
       <Image src={image || ''} />
-      <DraggableArea onDragOver={checkDraggedFile} onDrop={checkDraggedFile} />
+      <DraggableArea
+        onDragOver={event => {
+          checkDraggedFile(event)
+          dragover()
+        }}
+        onDrop={event => {
+          checkDraggedFile(event)
+          dragleave()
+        }}
+        onDragLeave={dragleave}
+        data-dragover={isDragover}
+      />
     </Container>
   )
 }
@@ -33,6 +53,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 `
 
 const Image = styled.img``
@@ -43,4 +64,9 @@ const DraggableArea = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
+  background-color: transparent;
+
+  &[data-dragover='true'] {
+    background-color: #ccc;
+  }
 `
